@@ -1,0 +1,198 @@
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+class Stack
+{
+	
+	int MAX_SIZE;
+	int *elements;
+	int top;
+	public:
+	Stack(int max_size)
+	{
+		 	MAX_SIZE=max_size;
+		 	elements=new int[max_size];
+		 	this->top=-1;
+	}
+	void Initialize_stack()
+	{
+		this->top=-1;
+		cout<<"Inicializando Stack..."<<endl<<endl;
+		cout<<"-----INICIALIZACION EXITOSA-----"<<endl<<endl;
+	}
+	bool IsEmptyStack()
+	{
+		if(this->top<0)
+		{
+			return true;
+			
+		}
+		else
+		{
+			return false;
+		}
+		//return (this->top=(this->elements-1))?true:false;
+	}
+	bool IsFullStack()
+	{
+		if(this->top==this->MAX_SIZE-1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+		//return (this->top==(this->MAX_SIZE-1))?true:false;
+		
+		
+	}
+	
+	int stack_pop()
+{
+
+		int n_ext=0;
+		if(IsEmptyStack()==false)
+		{
+			n_ext=this->elements[this->top];
+			cout<<"Extraccion exitosa"<<endl;
+			this->top--;
+			return n_ext;
+		}
+		else
+		if(IsEmptyStack()==true)
+		{
+				
+			cout<<"ERROR! tu pila esta vacia"<<endl;
+			return INT_MIN;
+		}
+		
+	}
+	void stack_push(int val)
+	{
+		if(IsFullStack()==false)
+		{
+			this->elements[this->top]=val;
+			this->top++;
+			cout<<"Insercion exitosa"<<endl;	
+		}
+		else
+		if(IsFullStack()==true)
+		{
+			cout<<"ERROR! tu pila esta llena y no se puede insertar elementos."<<endl;
+		}
+		
+	}
+	void print_stack()
+	{
+		if(IsEmptyStack()==false)
+		{
+		cout<<"[";
+		for(int i=-1;i<this->top;i++)//hasta que 0 se 
+		{	
+			cout<<this->elements[i]<<" , ";;
+		}
+		cout<<"]"<<endl;
+		}
+		else
+		if(IsEmptyStack()==true)
+		{
+			cout<<"Pila vacia"<<endl<<endl;
+		}	
+	}
+	int peek_stack()
+	{
+		if(IsEmptyStack()==false)
+		{
+				int peek=this->elements[this->top];
+				return peek;
+		}
+		else
+		if(IsEmptyStack()==true)
+		{
+			cout<<"ERROR pila vacia"<<endl<<endl;
+			return INT_MIN;
+		}
+	}
+	int StackSize( )
+	{
+		if(this->top+1<1)
+		{
+			cout<<"Pila vacia";
+		}
+		else
+		cout<<"size:"<<this->top+1;
+	}	
+	void Menu()
+	{
+	cout<<"Elige una opcion :"<<endl;
+	cout<<"1. PUSH"<<endl;	
+	cout<<"2. POP"<<endl;	
+	cout<<"3. PRINT"<<endl;
+	cout<<"4. PEEK"<<endl;
+	cout<<"5. EXIT"<<endl;
+	}
+};
+int main()
+{
+	int N, opcion;
+	cout<<"Ingresa la longitud de tu pila:"<<endl;
+	cin>>N;
+	Stack pila(N);
+	pila.Initialize_stack();
+	pila.Menu();
+	cin>>opcion;
+	//pila.Initialize_stack();
+	do
+	{
+		switch(opcion)
+		{
+			case 1:
+				int valor;
+				cout<<"Inserta el valor"<<endl;
+				cin>>valor;
+				pila.stack_push(valor);
+				pila.Menu();
+				cin>>opcion;
+				break;
+			case 2:
+				int limite;
+				limite=pila.stack_pop();//AQUI TOMA LO QUE RETORNA POP
+				if(limite==INT_MIN)
+				{
+				pila.Menu();
+				cin>>opcion;	
+				}
+				else
+				{
+					cout<<limite<<" extraido"<<endl;
+					pila.Menu();
+					cin>>opcion;	
+				}
+				break;
+			case 3:
+				pila.print_stack();
+				pila.Menu();
+				cin>>opcion;
+				break;
+			case 4:
+				int peek=pila.peek_stack();
+				if(peek==INT_MIN)
+				{
+				pila.Menu();
+				cin>>opcion;	
+				}
+				else
+				{
+					cout<<"peek: "<<peek<<endl;
+					pila.Menu();
+					cin>>opcion;
+				}
+				break;
+				
+		}
+	}
+	while(opcion!=5);
+	
+}
